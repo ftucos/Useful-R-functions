@@ -65,3 +65,34 @@ gene2genomeEx
 4     actinin alpha 1 [Source:HGNC Symbol;Acc:HGNC:163]              14     -1
 5     actinin alpha 4 [Source:HGNC Symbol;Acc:HGNC:166]  CHR_HG26_PATCH      1
 ```
+## Functional Analysis
+### Over Representation Analysis
+https://yulab-smu.github.io/clusterProfiler-book/
+#### Gene Ontology
+```r
+library(clusterProfiler)
+ORA <- enrichGO(gene = overexpressed_genes, 
+                universe = background_genes,
+                keyType = "ENTREZID",
+                OrgDb = org.Hs.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                qvalueCutoff = 0.05, 
+                readable = TRUE)
+
+ORA_summary <- data.frame(ORA)
+
+barplot(ORA)
+dotplot(ORA)
+
+
+ORA <- enrichKEGG(gene = overexpressed_genes, 
+                universe = background_genes,
+                keyType = "uniprot",
+                organism = 'hsa',
+                pAdjustMethod = "BH", 
+                qvalueCutoff = 0.05, 
+                readable = TRUE)
+```
+readable = TRUE associates Gene Symbol Names to ENTREZ ID; this is not available with enrichKEGG
+
