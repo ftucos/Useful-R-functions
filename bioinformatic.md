@@ -68,7 +68,6 @@ gene2genomeEx
 ## Functional Analysis
 ### Over Representation Analysis
 https://yulab-smu.github.io/clusterProfiler-book/
-#### Gene Ontology
 ```r
 library(clusterProfiler)
 ORA <- enrichGO(gene = overexpressed_genes, 
