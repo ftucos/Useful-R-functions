@@ -41,7 +41,7 @@ x %in% c("value1", "value2", "value3")
 #### opposite of match operator
 
 ```r
-&#39;%!in%&#39; <- function(x,y)!(&#39;%in%&#39;(x,y))
+'%!in%' <- function(x,y)!('%in%'(x,y))
 ```
 
 ## Magrittr
