@@ -93,5 +93,22 @@ ORA <- enrichKEGG(gene = overexpressed_genes,
                 qvalueCutoff = 0.05, 
                 readable = TRUE)
 ```
-readable = TRUE associates Gene Symbol Names to ENTREZ ID; this is not available with enrichKEGG
+`readable = TRUE` associates Hugo Gene Names to ENTREZ IDs to make cnetplot and summary tables readable. This argument is not available for the enrichKEGG function.
+
+### Functional Analysis of multiple samples
+```r
+# sample is a list of vector containing ENTREZ IDs
+sample <- list('CA1'=mut.CA1, 'LM'=mut.LM, 'LUC4'=mut.LUC4, 'SCC4'=mut.SCC4, 'SCC9'=mut.SCC9, 'SCC15'=mut.SCC15, 'SCC25'=mut.SCC25)
+
+ORAKegg <- compareCluster(pat, fun="enrichKEGG",
+                     organism="hsa", pvalueCutoff=0.1, pAdjustMethod = "BH")
+dotplot(ORAKegg)
+cnetplot(ORAKegg)
+emapplot(ORAGO, categorySize="pvalue", foldChange=geneList)
+
+```
+multiple samples emapplot requires the latest GitHub version of ClusterProfiler:
+```r
+devtools::install_github('https://github.com/YuLab-SMU/clusterProfiler')
+```
 
