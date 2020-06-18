@@ -9,7 +9,7 @@ library(org.Hs.eg.db)
 ENTREZID <- mapIds(org.Hs.eg.db, df$SYMBOL, 'ENTREZID', 'SYMBOL')
 ```
 
-Use ALIAS in place of SYMBOL if you are not shure that you are using RefSeq/Hugo approved symbols
+Use `ALIAS` in place of `SYMBOL` if you are not shure that you are using RefSeq/Hugo approved symbols
 
 #### Convert Ensembl ID retriving data from BioMart
 
@@ -37,7 +37,7 @@ gene2genomeEx
 5 ENSG00000224078       3653      SNHG14             SNHG14
 ```
 
-You can use also "ensembl_gene_id_version" for the format ENSG00000223972.4
+You can use also `"ensembl_gene_id_version"` for the format ENSG00000223972.4
 
 **Look-up 'external' gene names:**
 
