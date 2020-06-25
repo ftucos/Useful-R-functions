@@ -112,3 +112,36 @@ multiple samples emapplot requires the latest GitHub version of ClusterProfiler:
 devtools::install_github('https://github.com/YuLab-SMU/clusterProfiler')
 ```
 
+## Identify genes in genomic ranges
+```r
+library(GenomicRanges)
+# generate 10 random segments
+regions.gr <- GRanges(seqnames=Rle(rep(1,10)), ranges=IRanges(start=sample(1:1000,10), width=200), strand=Rle(rep("*",10)))
+regions.df <- as.data.frame(regions.gr)
+# generate 5 random genes
+fiveGeneNames <- paste(sample(letters,5), sample(1:100,5), sep="")
+genes.gr <- GRanges(seqnames=Rle(rep(1,5)), ranges=IRanges(start=sample(1:1000,5), width=100, names=fiveGeneNames), strand=Rle(sample(c("+","-"),5, replace=T)))
+genes.df <- as.data.frame(genes.gr)
+genes.df$name <- rownames(genes.df)
+# what regions overlap what genes?
+overlapGenes <- findOverlaps(query = genes.gr, subject = regions.gr, type='within')
+
+# Return any genes with an overlap.
+# Convert the resulting "Hits" object to a data frame
+# and use it as an index
+overlapGenes.df <- as.data.frame(overlapGenes)
+
+# queryHits are the Genes index
+# subject hits are the regions
+overlapGenes.df$Genes <- genes.df[overlapGenes.df$queryHits, 'name']
+```
+
+How to download a bed reference file for the human genome
+```sh
+#!/bin/bash
+wget -qO- ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_34/GRCh37_mapping/gencode.v34lift37.annotation.gff3.gz \
+    | gunzip --stdout - \
+    | awk '$3 == "gene"' - \
+    | convert2bed -i gff - \
+    > genes.bed
+```
