@@ -12,6 +12,8 @@ ENTREZID <- mapIds(org.Hs.eg.db, df$SYMBOL, 'ENTREZID', 'SYMBOL')
 Use `ALIAS` in place of `SYMBOL` if you are not shure that you are using RefSeq/Hugo approved symbols
 
 #### Convert Ensembl ID retriving data from BioMart
+more alternatives (
+https://shiring.github.io/genome/2016/10/23/AnnotationDbi
 
 **Look-up ENSEMBL gene IDs:**
 
