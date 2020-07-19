@@ -170,6 +170,14 @@ summarise(flights,
 
 #### spread() - long to wide format![](https://lh3.googleusercontent.com/paaS7OyTGxSAE5z9uOil23kgut2mBSF7qFCy8Uqx0slVcqnI2QQ-fsRAvGiQjtH8K6xFhJ75lF2JkgQOsO-dJmvFgBRQj39o79paDOvsEwJ2sJcv7uVXvmGs9BjcFZBOesFfnXMs)
 
+### transpose a dataframe 
+```r
+df <- df %>%
+  rownames_to_column() %>%
+  gather(var, value, -rowname) %>% 
+  spread(rowname, value) 
+```
+
 ## Favorite structures
 
 #### Rename a specific column
