@@ -258,4 +258,8 @@ set.seed(999)
 n = 1000  
 df = data.frame(factors = sample(letters[1:8], n, replace = TRUE),  
 x = rnorm(n), y = runif(n))
+
+x <- runif(N)
+y <- 5 * x + 3 + rnorm(N)
+
 ```
