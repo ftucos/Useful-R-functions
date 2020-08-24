@@ -114,6 +114,41 @@ multiple samples emapplot requires the latest GitHub version of ClusterProfiler:
 devtools::install_github('https://github.com/YuLab-SMU/clusterProfiler')
 ```
 
+### GSEA
+```r
+library("msigdbr")
+library("clusterProfiler")
+#msigdb 50 Hallmark set
+m_t2g = msigdbr(species = "Homo sapiens",category = "H") %>%
+  dplyr::select(gs_name, entrez_gene) 
+
+res.1 <- res %>% 
+  arrange(desc(log2FoldChange)) %>%
+  filter(!duplicated(entrezgene_id)) %>%
+  filter(!is.na(entrezgene_id))
+
+geneList <- red.1$log2FoldChange
+names(geneList) <- res.1$entrezgene_id
+geneList <- sort(geneList, decreasing = TRUE)
+
+em <- GSEA(geneList, TERM2GENE = m_t2g)
+
+em.summary <- as.data.frame(em) %>%
+  mutate(Description = sub(Description, pattern="HALLMARK_", rep = ""),
+         Description = sub(Description, pattern="_", rep = " "))               
+                            
+em.summary %>%
+  mutate(Description = factor(Description, levels = 
+                                em.summary %>% arrange(desc(enrichmentScore)) %>% pull(Description))) %>%
+  ggplot(aes(x=Description, y=enrichmentScore, fill=p.adjust)) +
+  geom_col() + 
+  theme_bw() +
+  scale_fill_continuous(type = "gradient",
+                        low = "#E74C3C", high = "#F1C40F",
+                        space = "Lab", na.value = "grey50", guide = "colourbar")  +
+  coord_flip()
+```
+
 ## Identify genes in genomic ranges
 ```r
 library(GenomicRanges)
