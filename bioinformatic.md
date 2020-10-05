@@ -127,7 +127,7 @@ res.1 <- res %>%
   filter(!duplicated(entrezgene_id)) %>%
   filter(!is.na(entrezgene_id))
 
-geneList <- red.1$log2FoldChange
+geneList <- res.1$log2FoldChange
 names(geneList) <- res.1$entrezgene_id
 geneList <- sort(geneList, decreasing = TRUE)
 
